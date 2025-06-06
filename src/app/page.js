@@ -1,103 +1,321 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+import { useState } from 'react';
+
+const fontSizes = [
+  { label: 'Small', value: 'text-sm' },
+  { label: 'Medium', value: 'text-base' },
+  { label: 'Large', value: 'text-lg' },
+];
+
+const iconPresets = {
+  PlusMinus: { closed: '+', open: '−' },
+  Arrow: { closed: '→', open: '↓' },
+  DouArrow: { closed: '⇊', open: '⇈' },
+  Caret: { closed: '▷', open: '▽' },
+  CircleMath: { closed: '⊕', open: '⊖' },
+  CrossClose: { closed: '✚', open: '⨉' },
+  Square: { closed: '▢', open: '■' },
+};
+
+const presets = {
+  Dark: {
+    bgColor: '#1A1A1A',
+    textColor: '#FFFFFF',
+    detailsColor: '#2D2D2D',
+  },
+  Light: {
+    bgColor: '#F9F9F9',
+    textColor: '#222222',
+    detailsColor: '#E2E2E2',
+  },
+  Teal: {
+    bgColor: '#153B3F',
+    textColor: '#D3E4CD',
+    detailsColor: '#1E5943',
+  },
+  WarmGray: {
+    bgColor: '#F5F1E9',
+    textColor: '#5B4B3A',
+    detailsColor: '#D6C9B3',
+  },
+  SlateBlue: {
+    bgColor: '#2E3A59',
+    textColor: '#D4D9E2',
+    detailsColor: '#394E7A',
+  },
+  Olive: {
+    bgColor: '#3A4A24',
+    textColor: '#D6D9C3',
+    detailsColor: '#566B2A',
+  },
+};
+
+export default function AccordionMaker() {
+  const [bgColor, setBgColor] = useState(presets.Dark.bgColor);
+  const [textColor, setTextColor] = useState(presets.Dark.textColor);
+  const [detailsColor, setDetailsColor] = useState(presets.Dark.detailsColor);
+  const [fontSize, setFontSize] = useState('text-base');
+  const [markerPosition, setMarkerPosition] = useState('left');
+  const [autoClose, setAutoClose] = useState(false);
+  const [openIndex, setOpenIndex] = useState(null);
+  const [selectedIcon, setSelectedIcon] = useState('PlusMinus');
+
+  const accordions = [
+    { title: 'What is Accordion Maker?', content: 'It lets you customize and copy accordion code in React + Tailwind.' },
+    { title: 'Can I style it?', content: 'Yes! Choose colors, font size, marker position, and auto-close.' },
+    { title: 'How do I use the code?', content: 'Just click "Copy" and paste it into your React project.' },
+  ];
+
+  const resetToDefaults = () => {
+    setBgColor(presets.Dark.bgColor);
+    setTextColor(presets.Dark.textColor);
+    setDetailsColor(presets.Dark.detailsColor);
+    setFontSize('text-base');
+    setMarkerPosition('left');
+    setAutoClose(false);
+    setOpenIndex(null);
+    setSelectedIcon('PlusMinus');
+  };
+
+  const applyPreset = (preset) => {
+    setBgColor(presets[preset].bgColor);
+    setTextColor(presets[preset].textColor);
+    setDetailsColor(presets[preset].detailsColor);
+  };
+
+  const renderColorInput = (label, value, onChange) => (
+    <div>
+      <label className="block font-semibold mb-2 text-gray-700">{label}</label>
+      <div className="flex items-center space-x-3">
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-10 h-10 rounded-md border border-gray-300 shadow-sm"
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (/^#([0-9A-Fa-f]{0,6})$/.test(val)) {
+              onChange(val);
+            }
+          }}
+          className="border rounded-md px-3 py-1 w-24"
+          maxLength={7}
+        />
+      </div>
     </div>
+  );
+
+  const generatedCode = `
+import React, { useState } from 'react';
+
+export default function CustomAccordion() {
+  const [openIndex, setOpenIndex] = useState(null);
+  const accordions = ${JSON.stringify(accordions, null, 2)};
+
+  return (
+    <div className="${fontSize} rounded p-4" style={{ backgroundColor: '${bgColor}', color: '${textColor}' }}>
+      {accordions.map((acc, i) => {
+        const isOpen = ${autoClose} ? openIndex === i : undefined;
+        return (
+          <details
+            key={i}
+            open={isOpen}
+            onClick={(e) => {
+              if (!${autoClose}) return;
+              e.preventDefault();
+              setOpenIndex(isOpen ? null : i);
+            }}
+            className="group p-4 rounded-lg mb-4 relative"
+            style={{ backgroundColor: '${detailsColor}' }}
+          >
+            <summary className="cursor-pointer font-semibold list-none flex items-center ${markerPosition === 'right' ? 'justify-between' : 'justify-between flex-row-reverse'}">
+              {acc.title}
+              <span
+                className="w-5 h-5 flex items-center justify-center text-sm font-bold select-none"
+                style={{ color: '${bgColor}', backgroundColor: '${textColor}' }}
+              >
+                <span className="group-open:hidden">${iconPresets[selectedIcon].closed}</span>
+                <span className="hidden group-open:inline">${iconPresets[selectedIcon].open}</span>
+              </span>
+            </summary>
+            <div className="mt-2" style={{ textAlign: '${markerPosition === 'right' ? 'left' : 'right'}' }}>
+              {acc.content}
+            </div>
+          </details>
+        );
+      })}
+    </div>
+  );
+}
+`;
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedCode);
+      alert('React component code copied!');
+    } catch (err) {
+      alert('Failed to copy code: ' + err.message);
+    }
+  };
+
+  return (
+    <main className="min-h-screen p-10 max-sm:p-4 pb-0 bg-gradient-to-b from-gray-50 to-gray-100 text-black">
+      <h1 className="text-4xl max-sm:text-center font-extrabold mb-8 ">WAG-Markordion</h1>
+
+      <div className="flex flex-wrap gap-3 mb-8">
+        {Object.entries(presets).map(([key, colors]) => (
+          <button
+            key={key}
+            onClick={() => applyPreset(key)}
+            className="px-5 py-2 rounded-md shadow-md"
+            style={{
+              backgroundColor: colors.bgColor,
+              color: colors.textColor,
+              border: `2px solid ${colors.detailsColor}`,
+            }}
+          >
+            {key}
+          </button>
+        ))}
+        <button
+          onClick={resetToDefaults}
+          className="px-5 py-2 rounded-md bg-red-600 text-white shadow-md hover:bg-red-700"
+        >
+          Reset Defaults
+        </button>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-10 max-w-7xl mx-auto">
+        <section className="space-y-6 bg-white p-4 rounded-xl shadow-lg">
+          {renderColorInput('Background Color', bgColor, setBgColor)}
+          {renderColorInput('Text Color', textColor, setTextColor)}
+          {renderColorInput('Details Background Color', detailsColor, setDetailsColor)}
+
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700">Font Size</label>
+            <select
+              className="border rounded-md px-3 py-2 w-full"
+              value={fontSize}
+              onChange={(e) => setFontSize(e.target.value)}
+            >
+              {fontSizes.map((size) => (
+                <option key={size.value} value={size.value}>
+                  {size.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700">Marker Position</label>
+            <select
+              className="border rounded-md px-3 py-2 w-full"
+              value={markerPosition}
+              onChange={(e) => setMarkerPosition(e.target.value)}
+            >
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700">Accordion Icon</label>
+            <select
+              className="border rounded-md px-3 py-2 w-full"
+              value={selectedIcon}
+              onChange={(e) => setSelectedIcon(e.target.value)}
+            >
+              {Object.keys(iconPresets).map((key) => (
+                <option key={key} value={key}>
+                  {key}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <input
+              type="checkbox"
+              id="autoClose"
+              checked={autoClose}
+              onChange={() => {
+                setAutoClose(!autoClose);
+                setOpenIndex(null);
+              }}
+              className="w-5 h-5"
+            />
+            <label htmlFor="autoClose" className="font-semibold">
+              Auto-close (Only one open at a time)
+            </label>
+          </div>
+
+          <button
+            onClick={handleCopy}
+            className="w-full bg-blue-600 text-white py-3 rounded-md shadow-md hover:bg-blue-700"
+          >
+            Copy React Code
+          </button>
+        </section>
+
+        <section className="bg-white p-4 rounded-xl shadow-lg">
+          <h2 className="text-xl font-semibold mb-2">Preview</h2>
+          <div className={`${fontSize} rounded p-4`} style={{ backgroundColor: bgColor, color: textColor }}>
+            {accordions.map((acc, i) => {
+              const isOpen = autoClose ? openIndex === i : undefined;
+              return (
+                <details
+                  key={i}
+                  open={isOpen}
+                  onClick={(e) => {
+                    if (!autoClose) return;
+                    e.preventDefault();
+                    setOpenIndex(isOpen ? null : i);
+                  }}
+                  className="group p-4 rounded-lg mb-4"
+                  style={{ backgroundColor: detailsColor }}
+                >
+                  <summary
+                    className={`cursor-pointer font-semibold list-none flex items-center ${markerPosition === 'right' ? 'justify-between' : 'justify-between flex-row-reverse'}`}
+                  >
+                    {acc.title}
+                    <span
+                      className="w-5 h-5 flex items-center justify-center text-sm font-bold select-none rounded-full"
+                      style={{ color: bgColor, backgroundColor: textColor }}
+                    >
+                      <span className="group-open:hidden">{iconPresets[selectedIcon].closed}</span>
+                      <span className="hidden group-open:inline">{iconPresets[selectedIcon].open}</span>
+                    </span>
+
+                  </summary>
+                  <div className="mt-2" style={{ textAlign: markerPosition === 'right' ? 'left' : 'right' }}>
+                    {acc.content}
+                  </div>
+                </details>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+
+      <footer className="mt-12 py-4 border-t text-center text-sm text-gray-600 bg-gray-50">
+        <p>
+          React Tailwind Accordion Maker |{' '}
+          <a
+            href="https://www.linkedin.com/in/prince-owire-841187250"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:underline"
+          >
+            Prince Owire
+          </a>{' '}
+          | © 2025
+        </p>
+      </footer>
+    </main>
   );
 }
