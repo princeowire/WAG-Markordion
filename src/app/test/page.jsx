@@ -1,55 +1,93 @@
 'use client';
 
-import React, { useState } from 'react';
+
+// This code uses divs instead of <details>, with state and smooth transitions:
+
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function CustomAccordion() {
   const [openIndex, setOpenIndex] = useState(null);
-
   const accordions = [
-    { title: 'What is Accordion Maker?', content: 'It lets you customize and copy accordion code in React + Tailwind.' },
-    { title: 'Can I style it?', content: 'Yes! Choose colors, font size, marker position, and auto-close.' },
-    { title: 'How do I use the code?', content: 'Just click "Copy" and paste it into your React project.' },
-  ];
+  {
+    "title": "What is Accordion Maker?",
+    "content": "It lets you customize and copy accordion code in React + Tailwind."
+  },
+  {
+    "title": "Can I style it?",
+    "content": "Yes! Choose colors, font size, marker position, and auto-close."
+  },
+  {
+    "title": "How do I use the code?",
+    "content": "Just click \"Copy\" and paste it into your React project."
+  }
+];
+  const autoClose = true;
+  const markerPosition = 'left';
+  const fontSize = 'text-lg';
+  const bgColor = '#F5F1E9';
+  const textColor = '#5B4B3A';
+  const detailsColor = '#D6C9B3';
+  const selectedIcon = 'Square';
+
+  function AccordionContent({ isOpen, children }) {
+    const ref = useRef(null);
+    const [height, setHeight] = useState('0px');
+
+    useEffect(() => {
+      if (ref.current) {
+        setHeight(isOpen ? `${ref.current.scrollHeight}px` : '0px');
+      }
+    }, [isOpen]);
+
+    return (
+      <div
+        ref={ref}
+        style={{ height }}
+        className="overflow-hidden transition-[height] duration-300 ease-in-out"
+      >
+        <div className="py-2">{children}</div>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className="text-base rounded p-4"
-      style={{ backgroundColor: '#3A4A24', color: '#D6D9C3' }}
-    >
+    <div className={fontSize} style={{ backgroundColor: bgColor, color: textColor, borderRadius: 8, padding: 16 }}>
       {accordions.map((acc, i) => {
-        const isOpen = true ? openIndex === i : undefined;
+        const isOpen = autoClose ? openIndex === i : false;
+
+        const toggle = () => {
+          if (!autoClose) {
+            setOpenIndex(openIndex === i ? null : i);
+          } else {
+            setOpenIndex(isOpen ? null : i);
+          }
+        };
+
         return (
-          <details
+          <div
             key={i}
-            open={isOpen}
-            onClick={(e) => {
-              if (!true) return;
-              e.preventDefault();
-              setOpenIndex(isOpen ? null : i);
-            }}
-            className="group p-4 rounded-lg mb-4 relative"
-            style={{ color: '#D6D9C3', backgroundColor: '#566B2A' }}
+            style={{ backgroundColor: detailsColor, borderRadius: 8, marginBottom: 16, padding: 16 }}
           >
-            <summary
-              className={`cursor-pointer font-semibold list-none flex items-center ${'left' === 'right' ? 'justify-between' : 'justify-between flex-row-reverse'}`}
-              style={{ backgroundColor: '#566B2A' }}
+            <button
+              onClick={toggle}
+              className={`w-full flex items-center justify-between font-semibold cursor-pointer select-none ${markerPosition === 'right' ? 'flex-row-reverse' : ''}`}
+              style={{ color: textColor, backgroundColor: detailsColor, border: 'none', padding: 0 }}
+              aria-expanded={isOpen}
+              aria-controls={`accordion-content-${i}`}
+              id={`accordion-header-${i}`}
             >
               {acc.title}
               <span
-                className="w-5 h-5 rounded-full text-white flex items-center justify-center text-sm font-bold select-none text-center p-2"
-                style={{ color: '#3A4A24', backgroundColor: '#D6D9C3' }}
+                className="w-5 h-5 flex items-center justify-center text-sm font-bold select-none rounded-full"
+                style={{ color: bgColor, backgroundColor: textColor }}
               >
-                <span className="group-open:hidden">+</span>
-                <span className="hidden group-open:inline">−</span>
+                {isOpen ? '■' : '▢'}
               </span>
-            </summary>
-            <div
-              className="mt-2"
-              style={{ textAlign: 'left' === 'right' ? 'left' : 'right' }}
-            >
+            </button>
+            <AccordionContent isOpen={isOpen} id={`accordion-content-${i}`} aria-labelledby={`accordion-header-${i}`}>
               {acc.content}
-            </div>
-          </details>
+            </AccordionContent>
+          </div>
         );
       })}
     </div>
