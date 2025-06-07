@@ -47,9 +47,12 @@ const defaultData = [
     answer: 'It lets you customize and copy accordion code in React + Tailwind.',
   },
   {
-    question: 'WHO IS BEHIND $Doug THE PUG?',
-    answer: `$DOUG's lead ideatoor is an experienced entrepreneur with a strong background in decentralized finance (DeFi).<br />
-      He's got a proven track record in leading successful projects and creating innovative campaigns in web3!`,
+    question: "Can I style it?",
+    answer:  'Yes! Choose colors, font size, marker position, and auto-close.'
+  },
+    {
+    question: "How do I use the code?",
+    answer:  'Just click "Copy" and paste it into your React project.'
   },
 ];
 
