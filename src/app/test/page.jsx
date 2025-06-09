@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState } from 'react';
 
 const data = [
@@ -9,7 +8,11 @@ const data = [
   },
   {
     "question": "Can I style it?",
-    "answer":  'Yes! Choose colors, font size, marker position, and auto-close.'
+    "answer": "Yes! Choose colors, font size, marker position, and auto-close."
+  },
+  {
+    "question": "How do I use the code?",
+    "answer": "Just click \"Copy\" and paste it into your React project."
   }
 ];
 
@@ -27,8 +30,8 @@ export default function CustomAccordion() {
           key={index}
           className="shadow-inner border-r-8 border-b-8 border-[1px]"
           style={{
-            backgroundColor: '#1A1A1A',
-            borderColor: '#3A3A3A',
+            backgroundColor: '#F5F1E9',
+            borderColor: '#D6C9B3',
             borderRadius: '50px',
           }}
         >
@@ -39,7 +42,7 @@ export default function CustomAccordion() {
             <h3
               className="text-base font-normal"
               style={{
-                color: '#F5F5F5',
+                color: '#5B4B3A',
                 lineHeight: 'normal',
               }}
             >
@@ -50,8 +53,8 @@ export default function CustomAccordion() {
               style={{
                 width: '3rem',
                 height: '3rem',
-                backgroundColor: '#F5F5F5',
-                color: '#1A1A1A',
+                backgroundColor: '#5B4B3A',
+                color: '#F5F1E9',
                 fontWeight: 'bold',
                 fontSize: '1.5rem',
                 transform: activeIndex === index ? 'rotate(90deg)' : 'rotate(0deg)',
@@ -67,7 +70,7 @@ export default function CustomAccordion() {
           >
             <p
               className="text-sm font-normal leading-7 px-10 pb-5"
-              style={{ color: '#F5F5F5' }}
+              style={{ color: '#5B4B3A' }}
               dangerouslySetInnerHTML={{ __html: item.answer }}
             ></p>
           </div>

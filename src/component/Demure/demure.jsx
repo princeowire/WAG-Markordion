@@ -244,11 +244,11 @@ export default function CustomAccordion() {
                 style={{
                   backgroundColor: bgColor,
                   borderColor: borderColor,
-                  borderRadius: '50px',
+                  borderRadius: '60px',
                 }}
               >
                 <div
-                  className="flex justify-between items-center py-4 cursor-pointer pl-5 pr-3"
+                  className="flex justify-between items-center p-4 px-8 pr-4 cursor-pointer relative"
                   onClick={() => toggleIndex(index)}
                 >
                   <h3
@@ -266,6 +266,7 @@ export default function CustomAccordion() {
                       color: bgColor,
                       fontWeight: 'bold',
                       fontSize: '1.5rem',
+                      lineHeight: '0.8',
                       transform: activeIndex === index ? 'rotate(90deg)' : 'rotate(0deg)',
                       transformOrigin: 'center',
                     }}
