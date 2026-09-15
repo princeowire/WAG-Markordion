@@ -1,81 +1,104 @@
 'use client';
+
+
 import React, { useState } from 'react';
 
-const data = [
+export default function CustomAccordion() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const accordions = [
   {
-    "question": "What is Accordion Maker?",
-    "answer": "It lets you customize and copy accordion code in React + Tailwind."
+    "title": "What is Accordion Maker?",
+    "content": "It lets you customize and copy accordion code in React + Tailwind."
   },
   {
-    "question": "Can I style it?",
-    "answer": "Yes! Choose colors, font size, marker position, and auto-close."
+    "title": "Can I style it?",
+    "content": "Yes! Choose colors, font size, marker position, and auto-close."
   },
   {
-    "question": "How do I use the code?",
-    "answer": "Just click \"Copy\" and paste it into your React project."
+    "title": "How do I use the code?",
+    "content": "Just click \"Copy\" and paste it into your React project."
   }
 ];
 
-export default function CustomAccordion() {
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const toggleIndex = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
   return (
-    <div className="max-w-[75%] mx-auto mt-10 flex flex-col gap-4">
-      {data.map((item, index) => (
-        <div
-          key={index}
-          className="shadow-inner border-r-8 border-b-8 border-[1px]"
-          style={{
-            backgroundColor: '#F5F1E9',
-            borderColor: '#D6C9B3',
-            borderRadius: '50px',
-          }}
-        >
-          <div
-            className="flex justify-between items-center py-4 cursor-pointer pl-5 pr-3"
-            onClick={() => toggleIndex(index)}
-          >
-            <h3
-              className="text-base font-normal"
-              style={{
-                color: '#5B4B3A',
-                lineHeight: 'normal',
-              }}
-            >
-              {item.question}
-            </h3>
-            <div
-              className="flex items-center justify-center rounded-full select-none transition-transform duration-100"
-              style={{
-                width: '3rem',
-                height: '3rem',
-                backgroundColor: '#5B4B3A',
-                color: '#F5F1E9',
-                fontWeight: 'bold',
-                fontSize: '1.5rem',
-                transform: activeIndex === index ? 'rotate(90deg)' : 'rotate(0deg)',
-                transformOrigin: 'center',
-              }}
-            >
-              {activeIndex === index ? '×' : '+'}
-            </div>
-          </div>
+    <div
+      className="text-base rounded-2xl p-5"
+      style={{
+        backgroundColor: '#020B0C',
+        color: '#E9EDE1'
+      }}
+    >
+      {accordions.map((acc, i) => {
+        const isOpen = false ? openIndex === i : undefined;
 
-          <div
-            className={`overflow-hidden transition-all duration-300 ${activeIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+        return (
+          <details
+            key={i}
+            open={isOpen}
+            onClick={(e) => {
+              if (!false) return;
+
+              e.preventDefault();
+              setOpenIndex(isOpen ? null : i);
+            }}
+            className="group p-5 rounded-xl mb-3 relative border border-white/10"
+            style={{
+              backgroundColor: '#071516'
+            }}
           >
-            <p
-              className="text-sm font-normal leading-7 px-10 pb-5"
-              style={{ color: '#5B4B3A' }}
-              dangerouslySetInnerHTML={{ __html: item.answer }}
-            ></p>
-          </div>
-        </div>
-      ))}
+            <summary
+              className="cursor-pointer font-medium list-none flex items-center justify-between"
+            >
+              {acc.title}
+
+
+
+                      <span
+                        className="
+                          w-8
+                          h-8
+                          shrink-0
+                          flex
+                          items-center
+                          justify-center
+                          select-none
+                          rounded-full
+                          border
+                          border-white/10
+                          transition-transform
+                          duration-300
+                          group-open:rotate-180
+                        "
+                        style={{
+                          color: '#020B0C',
+                          backgroundColor: '#E9EDE1',
+                        }}
+                      >
+                        {/* Plus icon */}
+                        <span className="group-open:hidden relative block h-4 w-4">
+                          <span className="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-current" />
+                          <span className="absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 bg-current" />
+                        </span>
+
+                        {/* Minus icon */}
+                        <span className="hidden group-open:block relative h-4 w-4">
+                          <span className="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 bg-current" />
+                        </span>
+                      </span>
+            </summary>
+
+            <div
+              className="mt-4 pt-4 border-t border-white/10 opacity-75 leading-relaxed"
+              style={{
+                textAlign: 'left'
+              }}
+            >
+              {acc.content}
+            </div>
+          </details>
+        );
+      })}
     </div>
   );
 }
