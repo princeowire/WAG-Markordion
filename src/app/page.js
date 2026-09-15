@@ -6,6 +6,7 @@ import ClassicAccordion from '@/component/Clasic/clasic';
 import DemureAccordion from '@/component/Demure/demure';
 import ClientTestRouter from '@/component/clientTestRouter';
 import Nav from '@/component/nav';
+import Link from 'next/link';
 
 export default function Page() {
   const [accordionType, setAccordionType] = useState('classic');
@@ -221,29 +222,32 @@ export default function Page() {
         <div className="flex items-center justify-between gap-4 border-t border-[#273837]/60 pt-5">
 
           <div className="flex items-center gap-3">
+            <Link href="/">
+              <button
+                type="button"
+                aria-label="Previous collection"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#344642] bg-[#0B2021]/80 text-[#A8B1AD] transition-all duration-300 hover:border-[#839D91] hover:bg-[#1A3331]"
+              >
+                ←
+              </button>
+            </Link >
 
-            <button
-              type="button"
-              aria-label="Previous collection"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#344642] bg-[#0B2021]/80 text-[#A8B1AD] transition-all duration-300 hover:border-[#839D91] hover:bg-[#1A3331]"
-            >
-              ←
-            </button>
-
-            <button
-              type="button"
-              aria-label="Next collection"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#344642] bg-[#0B2021]/80 text-[#A8B1AD] transition-all duration-300 hover:border-[#839D91] hover:bg-[#1A3331]"
-            >
-              →
-            </button>
+            <Link href='about'>
+              <button
+                type="button"
+                aria-label="Next collection"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#344642] bg-[#0B2021]/80 text-[#A8B1AD] transition-all duration-300 hover:border-[#839D91] hover:bg-[#1A3331]"
+              >
+                →
+              </button>
+            </Link>
 
           </div>
 
           <div className="hidden items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-[#657A72] sm:flex">
-            <span>Markordion</span>
+            <span>Maccordion Studio</span>
             <span className="h-px w-8 bg-[#40534D]" />
-            <span>Est. 2024</span>
+            <span>Est. {new Date().getFullYear()}</span>
           </div>
 
           <div className="text-right text-[10px] uppercase tracking-[0.18em] text-[#657A72]">
