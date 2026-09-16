@@ -378,6 +378,7 @@ export default function CustomAccordion() {
             className="
               rounded-2xl
               p-6
+              min-sm:p-0
               lg:p-8
               border
               border-white/[0.08]
@@ -409,7 +410,7 @@ export default function CustomAccordion() {
             </div>
 
             <div
-              className={`${fontSize} rounded-2xl p-4 sm:p-5 border border-white/10`}
+              className={`${fontSize} rounded-2xl p-0 sm:p-5 border border-white/10`}
               style={{
                 backgroundColor: bgColor,
                 color: textColor,

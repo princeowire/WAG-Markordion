@@ -7,9 +7,11 @@ import DemureAccordion from '@/component/Demure/demure';
 import ClientTestRouter from '@/component/clientTestRouter';
 import Nav from '@/component/nav';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Page() {
   const [accordionType, setAccordionType] = useState('classic');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const renderAccordion = () => {
     switch (accordionType) {
@@ -37,7 +39,7 @@ export default function Page() {
         {/* Brand */}
         <div className="flex shrink-0 items-center gap-3">
           <span className="text-xl text-[#D9DFD1] sm:text-2xl">
-            ✳
+            <Image src="/assets/logo.png" alt="Maccordion Studio" width={40} height={40} />
           </span>
 
           <div className="flex flex-col">
@@ -55,14 +57,62 @@ export default function Page() {
         <Nav />
 
         {/* Contact CTA */}
-        <button
-          type="button"
-          className="rounded-full bg-[#E9EDE1] px-4 py-2.5 text-[11px] font-medium text-[#071516] transition-transform duration-300 hover:scale-105 sm:px-6"
-        >
-          Contact Us
-        </button>
+
+        <div>
+
+          <a href="https://princedotdev.vercel.app/contact"
+          target="_blank"
+            className="hidden rounded-full bg-[#E9EDE1] px-6 py-2.5 text-[11px] font-medium text-[#071516] transition-transform duration-300 hover:scale-105 sm:block"
+          >
+            Contact Us
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            className="rounded-full border border-[#344642] px-4 py-2 text-[11px] text-[#D9DFD1] lg:hidden"
+          >
+            {menuOpen ? 'Close' : 'Menu'}
+          </button>
+        </div>
 
       </nav>
+
+            {menuOpen && (
+          <div
+            id="mobile-navigation"
+            className="mb-4 rounded-2xl border border-[#30413F] bg-[#0B2021]/95 p-4 backdrop-blur-xl lg:hidden"
+          >
+            <div className="flex flex-col gap-1">
+
+              <Link
+                href="/"
+                onClick={() => setMenuOpen(false)}
+                className=" rounded-xl bg-[#1A3331] px-4 py-3 text-sm text-[#E9EDE1]"
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/about"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-xl px-4 py-3 text-sm text-[#A8B1AD] hover:bg-[#1A3331]"
+              >
+                About
+              </Link>
+
+              <a
+                href="https://princedotdev.vercel.app/contact"
+                className="mt-3 rounded-full bg-[#E9EDE1] px-5 py-3 text-center text-sm font-medium text-[#071516]"
+              >
+                Contact Us
+              </a>
+
+            </div>
+          </div>
+      )}
 
       {/* Hero Section */}
       <main

@@ -414,7 +414,7 @@ export default function CustomAccordion() {
 
             {/* Existing Accordion Preview */}
             <div
-              className={`${fontSize} flex flex-col gap-4 rounded-[24px] p-4 sm:p-6`}
+              className={`${fontSize} flex flex-col gap-4 rounded-[24px] p-1 sm:p-6`}
               style={{
                 backgroundColor: bgColor,
                 color: textColor,

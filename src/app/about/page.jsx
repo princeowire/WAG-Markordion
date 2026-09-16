@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function AboutPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function AboutPage() {
             aria-label="Marccordion home"
           >
             <span className="text-xl text-[#D9DFD1] sm:text-2xl">
-              ✳
+              <Image src="/assets/logo.png" alt="Maccordion Studio" width={40} height={40} />
             </span>
 
             <div className="flex flex-col">
@@ -108,24 +109,8 @@ export default function AboutPage() {
                 About
               </Link>
 
-              <Link
-                href="/#materials"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm text-[#A8B1AD] hover:bg-[#1A3331]"
-              >
-                Materials
-              </Link>
-
-              <Link
-                href="/#products"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-xl px-4 py-3 text-sm text-[#A8B1AD] hover:bg-[#1A3331]"
-              >
-                Products
-              </Link>
-
               <a
-                href="mailto:your-email@example.com"
+                href="https://princedotdev.vercel.app/contact"
                 className="mt-3 rounded-full bg-[#E9EDE1] px-5 py-3 text-center text-sm font-medium text-[#071516]"
               >
                 Contact Us
